@@ -8,8 +8,8 @@ typedef CaptureCallback(String data);
 enum CaptureTorchMode { on, off }
 
 class QRCaptureController {
-  MethodChannel _methodChannel; 
-  CaptureCallback _capture; 
+  late MethodChannel _methodChannel;
+  CaptureCallback? _capture;
   
   QRCaptureController();
 
@@ -18,18 +18,18 @@ class QRCaptureController {
     _methodChannel.setMethodCallHandler((MethodCall call) async {
       if (call.method == 'onCaptured') { 
         if (_capture != null && call.arguments != null) {
-          _capture(call.arguments.toString());
+          _capture!(call.arguments.toString());
         }
       }
     });
   }
 
   void pause() {
-    _methodChannel?.invokeMethod('pause');
+    _methodChannel.invokeMethod('pause');
   }
 
   void resume() {
-    _methodChannel?.invokeMethod('resume');
+    _methodChannel.invokeMethod('resume');
   }
 
   void onCapture(CaptureCallback capture) {
@@ -44,7 +44,7 @@ class QRCaptureController {
 
 class QRCaptureView extends StatefulWidget {
   final QRCaptureController controller;
-  QRCaptureView({Key key, this.controller}) : super(key: key);
+  QRCaptureView({Key? key,required this.controller}) : super(key: key);
 
   @override
   State<StatefulWidget> createState() {
