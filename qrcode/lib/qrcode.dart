@@ -38,7 +38,7 @@ class QRCaptureController {
 
   set torchMode(CaptureTorchMode mode) {
     var isOn = mode == CaptureTorchMode.on;
-    _methodChannel?.invokeMethod('setTorchMode', isOn);
+    _methodChannel.invokeMethod('setTorchMode', isOn);
   }
 }
 
